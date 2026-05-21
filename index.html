@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gurb — Something weird, something wonderful</title>
+  <meta name="description" content="Gurb is here. Land softly, explore boldly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="#">gurb</a>
+    <nav aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#cta">Join</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Welcome to the landing zone</p>
+      <h1>Meet <span>Gurb</span>.<br>Your next favorite thing.</h1>
+      <p class="hero-copy">
+        A playful landing experience for the curious. Bold ideas, soft edges,
+        and just enough chaos to keep it interesting.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#cta">Get early access</a>
+        <a class="btn btn-secondary" href="#about">Learn more</a>
+      </div>
+      <div class="hero-stats" aria-label="Highlights">
+        <div><strong>10k+</strong><span>Curious visitors</span></div>
+        <div><strong>99%</strong><span>Good vibes</span></div>
+        <div><strong>1</strong><span>Very gurb energy</span></div>
+      </div>
+    </section>
+
+    <section id="about" class="panel">
+      <div class="panel-copy">
+        <h2>What is Gurb?</h2>
+        <p>
+          Gurb is a placeholder for something bigger — a landing page built to launch
+          ideas fast, look sharp, and feel unmistakably alive.
+        </p>
+      </div>
+      <div class="panel-card">
+        <p>“Soft landings. Hard launches. Maximum gurb.”</p>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <h2>Built for launch day</h2>
+      <div class="feature-grid">
+        <article>
+          <div class="icon" aria-hidden="true">01</div>
+          <h3>Instant clarity</h3>
+          <p>Hero, story, and CTA — everything a first impression needs.</p>
+        </article>
+        <article>
+          <div class="icon" aria-hidden="true">02</div>
+          <h3>Responsive by default</h3>
+          <p>Looks great on phones, tablets, and ultrawide chaos monitors.</p>
+        </article>
+        <article>
+          <div class="icon" aria-hidden="true">03</div>
+          <h3>Deploy anywhere</h3>
+          <p>Static files. No build step. Ship to GitHub Pages in minutes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="cta" class="cta">
+      <h2>Ready to gurb?</h2>
+      <p>Drop your email and we’ll let you know when the real thing lands.</p>
+      <form class="signup" action="#" method="post">
+        <label class="sr-only" for="email">Email address</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        <button type="submit" class="btn btn-primary">Notify me</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Gurb. All rights reserved.</p>
+    <a href="https://github.com/soup2964-spec/gurb-lander">GitHub</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
