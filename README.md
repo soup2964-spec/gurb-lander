@@ -1,26 +1,34 @@
 # Gurb Lander
 
-A static landing page for **Gurb** — fast to deploy, easy to customize.
+A self-hosted replica of the [vickyladyy.com](https://vickyladyy.com/) Bouncy.ai Pro Card link page.
+
+## Customize your links
+
+Edit `config.js`:
+
+```js
+links: [
+  {
+    id: "link-1",
+    title: "Press & Hold Here",
+    subtitle: "",
+    url: "https://your-link.com"
+  }
+]
+```
+
+Also update `profile.name` and `profile.avatar` for your branding.
+
+Optional Google Analytics: set `tracking.googleAnalyticsId` to your GA4 ID.
 
 ## Local preview
 
-Open `index.html` in your browser, or serve the folder locally:
+Open `index.html` in a browser, or run:
 
 ```bash
 npx serve .
 ```
 
-## Deploy to GitHub Pages
+## Deploy
 
-1. Push this repo to GitHub
-2. Go to **Settings → Pages**
-3. Set source to **Deploy from a branch**
-4. Choose `main` and `/ (root)`
-
-Your site will be live at `https://<username>.github.io/gurb-lander/`.
-
-## Structure
-
-- `index.html` — page markup
-- `styles.css` — layout and theme
-- `script.js` — signup form interaction
+Push to GitHub Pages or any static host. No build step required.
