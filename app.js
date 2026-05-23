@@ -19,7 +19,7 @@
   }
 
   function attachPressHold(element, url, options = {}) {
-    const { onShortInteraction } = options;
+    const { onShortInteraction, holdEvent } = options;
     let holdTimer = null;
     let pressStart = 0;
     let holdCompleted = false;
@@ -41,6 +41,9 @@
       holdTimer = window.setTimeout(() => {
         holdCompleted = true;
         element.classList.remove("is-holding");
+        if (holdEvent && typeof window.trackClarityEvent === "function") {
+          window.trackClarityEvent(holdEvent);
+        }
         openUrl(url);
       }, HOLD_THRESHOLD_MS);
     };
@@ -86,6 +89,9 @@
       if (node !== overlay) node.classList.remove("is-visible");
     });
     overlay.classList.add("is-visible");
+    if (typeof window.trackClarityEvent === "function") {
+      window.trackClarityEvent("overlay_shown");
+    }
   }
 
   function createLink(link, index) {
@@ -136,10 +142,11 @@
       '<span class="press-hold-hint">Tapping won\u2019t work \u2014 hold the button</span>' +
       '<span class="press-hold-progress" aria-hidden="true"></span>';
 
-    attachPressHold(overlay, link.url);
+    attachPressHold(overlay, link.url, { holdEvent: "hold_open_overlay" });
 
     attachPressHold(card, link.url, {
-      onShortInteraction: () => showPressHoldOverlay(overlay)
+      onShortInteraction: () => showPressHoldOverlay(overlay),
+      holdEvent: "hold_open_card"
     });
 
     card.addEventListener("mouseenter", () => {
@@ -159,27 +166,56 @@
     const profile = config.profile || {};
     const app = document.getElementById("app");
     const pageTitle = config.pageTitle || `${profile.name || "Links"} - Links`;
+    const siteUrl = (config.siteUrl || "").replace(/\/$/, "");
+
+    function absoluteUrl(path) {
+      if (!path) return "";
+      if (/^https?:\/\//i.test(path)) return path;
+      if (!siteUrl) return path;
+      return `${siteUrl}/${path.replace(/^\//, "")}`;
+    }
 
     document.title = pageTitle;
     document.getElementById("page-title").textContent = pageTitle;
 
     const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) metaDescription.content = profile.name || "";
+    if (metaDescription) {
+      metaDescription.content = profile.name ? `${profile.name} — Links` : "";
+    }
 
     const ogTitle = document.querySelector('meta[property="og:title"]') || document.createElement("meta");
     ogTitle.setAttribute("property", "og:title");
-    ogTitle.content = profile.name || "";
+    ogTitle.content = profile.name || pageTitle;
     if (!ogTitle.parentNode) document.head.appendChild(ogTitle);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]') || document.createElement("meta");
+    ogUrl.setAttribute("property", "og:url");
+    ogUrl.content = siteUrl || window.location.href;
+    if (!ogUrl.parentNode) document.head.appendChild(ogUrl);
 
     const ogImage = document.querySelector('meta[property="og:image"]') || document.createElement("meta");
     ogImage.setAttribute("property", "og:image");
-    ogImage.content = profile.avatar || "";
+    ogImage.content = absoluteUrl(profile.avatar);
     if (!ogImage.parentNode) document.head.appendChild(ogImage);
 
     const twitterImage = document.querySelector('meta[name="twitter:image"]') || document.createElement("meta");
     twitterImage.setAttribute("name", "twitter:image");
-    twitterImage.content = profile.avatar || "";
+    twitterImage.content = absoluteUrl(profile.avatar);
     if (!twitterImage.parentNode) document.head.appendChild(twitterImage);
+
+    if (siteUrl) {
+      let canonical = document.querySelector('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = document.createElement("link");
+        canonical.setAttribute("rel", "canonical");
+        document.head.appendChild(canonical);
+      }
+      canonical.href = siteUrl;
+    }
+
+    if (typeof window.initClarity === "function") {
+      window.initClarity(config.clarity?.projectId);
+    }
 
     const bgBlur = document.createElement("div");
     bgBlur.className = "bg-blur";

@@ -1,4 +1,5 @@
 window.SITE_CONFIG = {
+  siteUrl: "https://maddyments.com",
   pageTitle: "Maddy ments links",
   profile: {
     name: "Maddy Ments",
@@ -19,5 +20,9 @@ window.SITE_CONFIG = {
       subtitle: "",
       url: "https://www.fanvue.com/maddy865?free_trial=639ab915-c0e9-4205-9308-63c4141c0eea"
     }
-  ]
+  ],
+  // Microsoft Clarity: https://clarity.microsoft.com → create project for maddyments.com
+  clarity: {
+    projectId: "wvgg3q1ip0"
+  }
 };
