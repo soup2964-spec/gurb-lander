@@ -1,6 +1,6 @@
 # Gurb Lander
 
-A self-hosted replica of the [vickyladyy.com](https://vickyladyy.com/) Bouncy.ai Pro Card link page.
+A self-hosted press-and-hold link page.
 
 ## Customize your links
 
@@ -18,8 +18,6 @@ links: [
 ```
 
 Also update `profile.name` and `profile.avatar` for your branding.
-
-Optional Google Analytics: set `tracking.googleAnalyticsId` to your GA4 ID.
 
 ## Local preview
 

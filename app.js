@@ -154,7 +154,7 @@
   function render() {
     const profile = config.profile || {};
     const app = document.getElementById("app");
-    const pageTitle = `${profile.name || "Links"} - Links`;
+    const pageTitle = config.pageTitle || `${profile.name || "Links"} - Links`;
 
     document.title = pageTitle;
     document.getElementById("page-title").textContent = pageTitle;
@@ -176,21 +176,6 @@
     twitterImage.setAttribute("name", "twitter:image");
     twitterImage.content = profile.avatar || "";
     if (!twitterImage.parentNode) document.head.appendChild(twitterImage);
-
-    if (config.tracking?.googleAnalyticsId) {
-      const gaId = config.tracking.googleAnalyticsId;
-      const script = document.createElement("script");
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-      document.head.appendChild(script);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        window.dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", gaId);
-    }
 
     const bgBlur = document.createElement("div");
     bgBlur.className = "bg-blur";

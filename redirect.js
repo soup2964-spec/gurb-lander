@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
-  const hasBeenRedirected = urlParams.get("bouncyRedirected") === "true";
+  const hasBeenRedirected = urlParams.get("redirected") === "true";
 
   const redirectUrlObj = new URL(window.location.href);
-  redirectUrlObj.searchParams.set("bouncyRedirected", "true");
+  redirectUrlObj.searchParams.set("redirected", "true");
   const redirectUrl = redirectUrlObj.toString();
 
   function detectDevice() {
