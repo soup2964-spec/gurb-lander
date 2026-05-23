@@ -128,6 +128,10 @@ body {
   transform: scale(1.02);
 }
 
+.link-card.is-holding .link-card-inner {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
 .link-card-inner {
   position: relative;
   border-radius: 14px;

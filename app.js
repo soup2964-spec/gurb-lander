@@ -10,10 +10,16 @@
   }
 
   function openUrl(url) {
-    window.location.href = ensureProtocol(url);
+    const target = ensureProtocol(url);
+    if (typeof window.openInExternalBrowser === "function") {
+      window.openInExternalBrowser(target);
+      return;
+    }
+    window.location.href = target;
   }
 
-  function attachPressHold(element, url) {
+  function attachPressHold(element, url, options = {}) {
+    const { onShortInteraction } = options;
     let holdTimer = null;
     let pressStart = 0;
     let holdCompleted = false;
@@ -43,7 +49,11 @@
       const heldMs = Date.now() - pressStart;
 
       if (!holdCompleted && heldMs < HOLD_THRESHOLD_MS) {
-        event.preventDefault();
+        if (onShortInteraction && event.type === "keyup") {
+          onShortInteraction(event);
+        } else if (!onShortInteraction) {
+          event.preventDefault();
+        }
       }
 
       clearHold();
@@ -57,6 +67,8 @@
     element.addEventListener("touchcancel", clearHold);
     element.addEventListener("click", (event) => {
       event.preventDefault();
+      if (holdCompleted) return;
+      if (onShortInteraction) onShortInteraction(event);
     });
     element.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
@@ -126,24 +138,16 @@
 
     attachPressHold(overlay, link.url);
 
+    attachPressHold(card, link.url, {
+      onShortInteraction: () => showPressHoldOverlay(overlay)
+    });
+
     card.addEventListener("mouseenter", () => {
       inner.style.backgroundColor = theme.linkHoverBackground || "rgba(255, 255, 255, 0.12)";
     });
 
     card.addEventListener("mouseleave", () => {
       inner.style.backgroundColor = theme.linkBackground || "rgba(255, 255, 255, 0.08)";
-    });
-
-    const revealOverlay = (event) => {
-      event.preventDefault();
-      showPressHoldOverlay(overlay);
-    };
-
-    card.addEventListener("click", revealOverlay);
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        revealOverlay(event);
-      }
     });
 
     card.appendChild(inner);
