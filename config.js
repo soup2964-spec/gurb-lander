@@ -1,7 +1,7 @@
 window.SITE_CONFIG = {
   pageTitle: "Maddy ments links",
   profile: {
-    name: "Viktoria Johansson",
+    name: "Maddy Ments",
     avatar: "landing-page-2.png"
   },
   theme: {
